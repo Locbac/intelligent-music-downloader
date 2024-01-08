@@ -11,7 +11,7 @@
             "program": "${file}",
             "console": "integratedTerminal",
             "justMyCode": true
-            "args": ["https://open.spotify.com/track/6FO4K7MrMoYkc5BlpX5LNV?si=ecfb9f7d67a044a8"]
+            "args": ["https://open.spotify.com/track/3FN7IJMnUMWZXDw08ix3ot?si=44591e59df82424a"]
         }
     ]
 }
