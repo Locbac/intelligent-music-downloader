@@ -11,13 +11,17 @@
   - Spotdl
   - Ytdlp
 
+- Format:
+  - mp3
+  - m4a
+  - wav
+  - ogg
+
 
 - How to use it:
 ```
-$ py imd.py [URL (spotify or any site supported by ytdlp)]
-$ py imd.py [Search Term]
-$ imd [URL (spotify or any site supported by ytdlp)]
-$ imd [Search Term]
+$ imd [URL (spotify or any site supported by ytdlp)] [format]
+$ imd [Search Term] [format]
 ```
 - Change the path of your spotdl and yt-dlp in main.py.
 ```python
