@@ -26,7 +26,7 @@ ytdlp_path = "A:\\Apps\\Programs\\Python\\Python312\\Scripts\\yt-dlp.exe"
 ###############################################
 
 parser = argparse.ArgumentParser()
-parser.add_argument("user_input", help="Song search term, URL, etc.")
+parser.add_argument("user_input", nargs="+", help="Song search term, URL, etc.")
 args: Namespace = parser.parse_args()
 
 
@@ -52,7 +52,7 @@ def check_input(user_input):
 
 
 user_input = args.user_input
-input_type = check_input(user_input)
+# input_type = check_input(user_input)
 
 
 def multi_url(user_input):
@@ -60,12 +60,15 @@ def multi_url(user_input):
 
 
 def main():
-    urls = user_input.split()
-    if multi_url(user_input):
-        for url in urls:
-            download_url(url)
-    else:
-        download_url(user_input)
+    # urls = user_input.split()
+    # if multi_url(user_input):
+    #     for url in urls:
+    #         download_url(url)
+    # else:
+    #     download_url(user_input)
+    # print(f"{user_input}")
+    for url in user_input:
+        download_url(url)
 
 
 def run_command_no(command):
@@ -110,6 +113,7 @@ def run_command_wo(command):
 
 
 def download_url(url):
+    input_type = check_input(url)
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
         run_command_no(command)
