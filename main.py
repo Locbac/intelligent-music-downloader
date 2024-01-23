@@ -43,15 +43,17 @@ parser.add_argument(
     "--link",
     "-wl",
     action="store_true",
+    dest="wl",
     help="Creates a link to the original downloaded song with yt-dlp",
 )
 parser.add_argument(
     "--ext-dl",
     "-ed",
     action="store_true",
+    dest="ed",
     help="Uses an external downloader, aria2c",
 )
-args: Namespace = parser.parse_args()
+args = parser.parse_args()
 
 
 def check_input(user_input):
@@ -140,8 +142,8 @@ def download_url(url):
     input_type = check_input(url)
     format = args.format
     # writelink = args.link or args.wl
-    writelink = getattr(args, "link", False) or getattr(args, "wl", False)
-    extdl = getattr(args, "ext-dl", False) or getattr(args, "ed", False)
+    writelink = args.wl
+    extdl = args.ed
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
         run_command_no(command)

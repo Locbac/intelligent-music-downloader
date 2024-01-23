@@ -11,6 +11,9 @@
   - `pip install spotdl`
 - YT-DLP
   - `pip install yt-dlp`
+- ARIA2C
+  - Only needs to be installed for `-ed` functionality.
+  - https://github.com/aria2/aria2
 
 
 ## Main Functions
@@ -33,6 +36,11 @@
   - Creates a link to the original url along with the file.
   - `--link`
   - `-wl`
+
+- External Downloader
+  - `-ed`
+  - `--ext-dl`
+  - Uses Aria2c to download music instead of the default yt-dlp downloader.
 
 - How to use it:
 ```
