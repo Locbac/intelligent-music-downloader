@@ -16,7 +16,25 @@
 ```
 $ py imd.py [URL (spotify or any site supported by ytdlp)]
 $ py imd.py [Search Term]
+$ imd [URL (spotify or any site supported by ytdlp)]
+$ imd [Search Term]
 ```
+- Change the path of your spotdl and yt-dlp in main.py.
+```python
+#### Replace the \ with \\ in path names
+
+spotdl_path = "A:\\Apps\\Programs\\Python\\Python312\\Scripts\\spotdl.exe"
+ytdlp_path = "A:\\Apps\\Programs\\Python\\Python312\\Scripts\\yt-dlp.exe"
+
+```
+
+- Change the path of where main.py is located and add imd.bat to path in windows.
+```batch
+@echo off
+setlocal
+python "A:\Projects\Music Downloader\main.py" %*
+```
+
 ## How it works
 - It's a wrapper for spotdl and ytdlp to make it quicker to use, downloads metadata and album covers, as well as allows only one main command-line argument, from where it will go through and let you choose to search or to download and from where.
 
