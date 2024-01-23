@@ -27,7 +27,11 @@ ytdlp_path = "A:\\Apps\\Programs\\Python\\Python312\\Scripts\\yt-dlp.exe"
 ###############################################
 
 parser = argparse.ArgumentParser()
-parser.add_argument("user_input", nargs="+", help="Song search term, URL, etc.")
+parser.add_argument(
+    "user_input",
+    nargs="+",
+    help="Song search term, URL, etc.",
+)
 parser.add_argument(
     "--format",
     "-f",
@@ -40,6 +44,12 @@ parser.add_argument(
     "-wl",
     action="store_true",
     help="Creates a link to the original downloaded song with yt-dlp",
+)
+parser.add_argument(
+    "--ext-dl",
+    "-ed",
+    action="store_true",
+    help="Uses an external downloader, aria2c",
 )
 args: Namespace = parser.parse_args()
 
@@ -131,6 +141,7 @@ def download_url(url):
     format = args.format
     # writelink = args.link or args.wl
     writelink = getattr(args, "link", False) or getattr(args, "wl", False)
+    extdl = getattr(args, "ext-dl", False) or getattr(args, "ed", False)
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
         run_command_no(command)
@@ -155,6 +166,15 @@ def download_url(url):
         ]
         if writelink:
             command.extend(["--write-link"])
+        if extdl:
+            command.extend(
+                [
+                    "--external-downloader",
+                    "aria2c",
+                    "--external-downloader-args",
+                    "-x 16 -s 16",
+                ]
+            )
 
         run_command_no(command)
 
