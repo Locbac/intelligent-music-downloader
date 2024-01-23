@@ -27,6 +27,13 @@ ytdlp_path = "A:\\Apps\\Programs\\Python\\Python312\\Scripts\\yt-dlp.exe"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("user_input", nargs="+", help="Song search term, URL, etc.")
+parser.add_argument(
+    "--format",
+    "-f",
+    choices=["mp3", "wav", "ogg", "m4a"],
+    default="mp3",
+    help="Output format",
+)
 args: Namespace = parser.parse_args()
 
 
@@ -114,6 +121,7 @@ def run_command_wo(command):
 
 def download_url(url):
     input_type = check_input(url)
+    format = args.format
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
         run_command_no(command)
@@ -132,7 +140,7 @@ def download_url(url):
             "--audio-quality",
             "0",
             "--audio-format",
-            "mp3",
+            format,
             url,
         ]
 
@@ -184,7 +192,7 @@ def download_url(url):
                     "--audio-quality",
                     "0",
                     "--audio-format",
-                    "mp3",
+                    format,
                     selected_video,
                 ]
                 run_command_no(command)
