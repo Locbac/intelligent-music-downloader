@@ -55,83 +55,17 @@ user_input = args.user_input
 input_type = check_input(user_input)
 
 
+def multi_url(user_input):
+    return len(user_input.split()) > 1
+
+
 def main():
-    if input_type == "Spotify URL":
-        command = [spotdl_path, user_input]
-        run_command_no(command)
-
-    elif input_type == "General URL":
-        command = [
-            ytdlp_path,
-            "-f",
-            "251/140/bestaudio",
-            "--embed-thumbnail",
-            "--add-metadata",
-            "-o",
-            "%(title)s.%(ext)s",
-            "-ciw",
-            "-x",
-            "--audio-quality",
-            "0",
-            "--audio-format",
-            "mp3",
-            user_input,
-        ]
-
-        run_command_no(command)
-
+    urls = user_input.split()
+    if multi_url(user_input):
+        for url in urls:
+            download_url(url)
     else:
-        while True:
-            which_tool = input(
-                "No URL was provided, which tool do you want to search for a song with? (spotdl, ytdlp)?: "
-            )
-            if which_tool is None:
-                continue
-            elif which_tool == "spotdl":
-                break
-            elif which_tool == "ytdlp":
-                break
-            else:
-                continue
-        if which_tool == "spotdl":
-            command = [spotdl_path, user_input]
-            run_command_no(command)
-        elif which_tool == "ytdlp":
-            command = [
-                ytdlp_path,
-                "ytsearch10:" + user_input,
-                "--get-id",
-                "--get-title",
-            ]
-
-            output, return_code = run_command_wo(command)
-
-            lines = output.split("\n")
-
-            for i, line in enumerate(lines):
-                print(f"{i+1}. {line}")
-            selected_number = int(input("Which video do you want to download?: "))
-            if 1 <= selected_number <= len(lines):
-                selected_video = lines[selected_number - 1].split()[0]
-                command = [
-                    ytdlp_path,
-                    "-f",
-                    "251/140/bestaudio",
-                    "--embed-thumbnail",
-                    "--add-metadata",
-                    "-o",
-                    "%(title)s.%(ext)s",
-                    "-ciw",
-                    "-x",
-                    "--audio-quality",
-                    "0",
-                    "--audio-format",
-                    "mp3",
-                    selected_video,
-                ]
-                run_command_no(command)
-            else:
-                print("Invalid selection.")
+        download_url(user_input)
 
 
 def run_command_no(command):
@@ -173,6 +107,85 @@ def run_command_wo(command):
         print(remaining_output.strip(), flush=True)
 
     return output, process.returncode
+
+
+def download_url(url):
+    if input_type == "Spotify URL":
+        command = [spotdl_path, url]
+        run_command_no(command)
+
+    elif input_type == "General URL":
+        command = [
+            ytdlp_path,
+            "-f",
+            "251/140/bestaudio",
+            "--embed-thumbnail",
+            "--add-metadata",
+            "-o",
+            "%(title)s.%(ext)s",
+            "-ciw",
+            "-x",
+            "--audio-quality",
+            "0",
+            "--audio-format",
+            "mp3",
+            url,
+        ]
+
+        run_command_no(command)
+
+    else:
+        while True:
+            which_tool = input(
+                "No URL was provided, which tool do you want to search for a song with? (spotdl, ytdlp)?: "
+            )
+            if which_tool is None:
+                continue
+            elif which_tool == "spotdl":
+                break
+            elif which_tool == "ytdlp":
+                break
+            else:
+                continue
+        if which_tool == "spotdl":
+            command = [spotdl_path, url]
+            run_command_no(command)
+        elif which_tool == "ytdlp":
+            command = [
+                ytdlp_path,
+                "ytsearch10:" + url,
+                "--get-id",
+                "--get-title",
+            ]
+
+            output, return_code = run_command_wo(command)
+
+            lines = output.split("\n")
+
+            for i, line in enumerate(lines):
+                print(f"{i+1}. {line}")
+            selected_number = int(input("Which video do you want to download?: "))
+            if 1 <= selected_number <= len(lines):
+                selected_video = lines[selected_number - 1].split()[0]
+                command = [
+                    ytdlp_path,
+                    "-f",
+                    "251/140/bestaudio",
+                    "--embed-thumbnail",
+                    "--add-metadata",
+                    "-o",
+                    "%(title)s.%(ext)s",
+                    "-ciw",
+                    "-x",
+                    "--audio-quality",
+                    "0",
+                    "--audio-format",
+                    "mp3",
+                    selected_video,
+                ]
+                run_command_no(command)
+            else:
+                print("Invalid selection.")
 
 
 main()
