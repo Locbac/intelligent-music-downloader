@@ -141,8 +141,8 @@ def run_command_wo(command):
 def download_url(url):
     input_type = check_input(url)
     format = args.format
-    # writelink = args.link or args.wl
     writelink = args.wl
+    # writelink = getattr(args, "wl", False)
     extdl = args.ed
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
@@ -161,7 +161,6 @@ def download_url(url):
             "-x",
             "--audio-quality",
             "0",
-            "--write-link",
             "--audio-format",
             format,
             url,
