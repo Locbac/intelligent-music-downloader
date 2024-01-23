@@ -1,4 +1,5 @@
 import argparse
+from os import write
 import re
 import subprocess
 import sys
@@ -33,6 +34,12 @@ parser.add_argument(
     choices=["mp3", "wav", "ogg", "m4a"],
     default="mp3",
     help="Output format",
+)
+parser.add_argument(
+    "--link",
+    "-wl",
+    action="store_true",
+    help="Creates a link to the original downloaded song with yt-dlp",
 )
 args: Namespace = parser.parse_args()
 
@@ -122,27 +129,48 @@ def run_command_wo(command):
 def download_url(url):
     input_type = check_input(url)
     format = args.format
+    # writelink = args.link or args.wl
+    writelink = getattr(args, "link", False) or getattr(args, "wl", False)
     if input_type == "Spotify URL":
         command = [spotdl_path, url]
         run_command_no(command)
 
     elif input_type == "General URL":
-        command = [
-            ytdlp_path,
-            "-f",
-            "251/140/bestaudio",
-            "--embed-thumbnail",
-            "--add-metadata",
-            "-o",
-            "%(title)s.%(ext)s",
-            "-ciw",
-            "-x",
-            "--audio-quality",
-            "0",
-            "--audio-format",
-            format,
-            url,
-        ]
+        if writelink:
+            command = [
+                ytdlp_path,
+                "-f",
+                "251/140/bestaudio",
+                "--embed-thumbnail",
+                "--add-metadata",
+                "-o",
+                "%(title)s.%(ext)s",
+                "-ciw",
+                "-x",
+                "--audio-quality",
+                "0",
+                "--write-link",
+                "--audio-format",
+                format,
+                url,
+            ]
+        else:
+            command = [
+                ytdlp_path,
+                "-f",
+                "251/140/bestaudio",
+                "--embed-thumbnail",
+                "--add-metadata",
+                "-o",
+                "%(title)s.%(ext)s",
+                "-ciw",
+                "-x",
+                "--audio-quality",
+                "0",
+                "--audio-format",
+                format,
+                url,
+            ]
 
         run_command_no(command)
 
