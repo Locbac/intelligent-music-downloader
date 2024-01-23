@@ -136,41 +136,25 @@ def download_url(url):
         run_command_no(command)
 
     elif input_type == "General URL":
+        command = [
+            ytdlp_path,
+            "-f",
+            "251/140/bestaudio",
+            "--embed-thumbnail",
+            "--add-metadata",
+            "-o",
+            "%(title)s.%(ext)s",
+            "-ciw",
+            "-x",
+            "--audio-quality",
+            "0",
+            "--write-link",
+            "--audio-format",
+            format,
+            url,
+        ]
         if writelink:
-            command = [
-                ytdlp_path,
-                "-f",
-                "251/140/bestaudio",
-                "--embed-thumbnail",
-                "--add-metadata",
-                "-o",
-                "%(title)s.%(ext)s",
-                "-ciw",
-                "-x",
-                "--audio-quality",
-                "0",
-                "--write-link",
-                "--audio-format",
-                format,
-                url,
-            ]
-        else:
-            command = [
-                ytdlp_path,
-                "-f",
-                "251/140/bestaudio",
-                "--embed-thumbnail",
-                "--add-metadata",
-                "-o",
-                "%(title)s.%(ext)s",
-                "-ciw",
-                "-x",
-                "--audio-quality",
-                "0",
-                "--audio-format",
-                format,
-                url,
-            ]
+            command.extend(["--write-link"])
 
         run_command_no(command)
 

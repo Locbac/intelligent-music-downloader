@@ -29,11 +29,16 @@
   - ogg
   - Default is mp3
 
+- Link
+  - Creates a link to the original url along with the file.
+  - `--link`
+  - `-wl`
 
 - How to use it:
 ```
 $ imd [URL (spotify or any site supported by ytdlp)] [format]
 $ imd [Search Term] [format]
+$ usage: main.py [-h] [--format {mp3,wav,ogg,m4a}] [--link] user_input [user_input ...]
 ```
 - Change the path of your spotdl and yt-dlp in main.py.
 ```python
