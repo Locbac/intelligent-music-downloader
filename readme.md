@@ -27,6 +27,7 @@
   - m4a
   - wav
   - ogg
+  - Default is mp3
 
 
 - How to use it:
