@@ -2,6 +2,17 @@
 #### Video Demo:  https://youtu.be/itixvAOxhvY
 #### Description: Downloads from spotify and other sources quickly.
 
+
+## Prerequisites
+- Python3
+  - https://www.python.org/downloads/
+  - For windows: `winget install python.Python.3.12`
+- SPOTDL V3.x
+  - `pip install spotdl`
+- YT-DLP
+  - `pip install yt-dlp`
+
+
 ## Main Functions
 - Download:
   - Spotdl
